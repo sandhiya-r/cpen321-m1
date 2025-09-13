@@ -31,7 +31,7 @@ jobs:
           script: |
             cd /home/ubuntu/cpen321-tutorial
             echo "MONGODB_URI=$PROD_MONGODB_URI" > .env
-            echo "PORT=3000" >> .env
+            echo "PORT=80" >> .env
             docker-compose down
             docker-compose up -d --build
         env:
