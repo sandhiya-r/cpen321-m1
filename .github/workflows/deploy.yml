@@ -32,7 +32,11 @@ jobs:
             cd /home/ubuntu/cpen321-tutorial
             echo "MONGODB_URI=$PROD_MONGODB_URI" > .env
             echo "PORT=80" >> .env
+            echo "JWT_SECRET=$JWT_SECRET" >> .env
+            echo "GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID" >> .env
             docker-compose down
             docker-compose up -d --build
         env:
           PROD_MONGODB_URI: ${{ secrets.PROD_MONGODB_URI }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
