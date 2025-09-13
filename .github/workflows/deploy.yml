@@ -22,24 +22,16 @@ jobs:
           target: "/home/ubuntu/cpen321-tutorial"
       
       - name: Rebuild and Deploy
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v0.1.7
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
+          envs: PROD_MONGODB_URI
           script: |
             cd /home/ubuntu/cpen321-tutorial
-
-            # Write secrets into .env
-            cat > .env <<EOF
-            PORT=${{ secrets.PROD_PORT }}
-            MONGODB_URI=${{ secrets.PROD_MONGODB_URI }}
-            EOF
-
-            #Give .env permissions
-            chmod 600 .env
-
-            # Build and run container
+            # Write the secret into .env so docker-compose can read it
+            echo "MONGODB_URI=${PROD_MONGODB_URI}" > .env
+            echo "PORT=3000" >> .env
             docker-compose down
-            docker-compose --env-file .env build 
-            docker-compose --env-file .env up -d
+            docker-compose up -d --build
