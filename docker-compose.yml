@@ -18,7 +18,7 @@ services:
     restart: always
     container_name: cpen321_app
     environment:
-      - MONGODB_URI=${MONGODB_URI}
+      - MONGODB_URI=${PROD_MONGODB_URI}
       - PORT=${PORT}
     ports:
       - "${PORT}:${PORT}"
