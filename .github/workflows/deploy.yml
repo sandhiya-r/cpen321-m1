@@ -30,8 +30,9 @@ jobs:
           envs: PROD_MONGODB_URI
           script: |
             cd /home/ubuntu/cpen321-tutorial
-            # Write the secret into .env so docker-compose can read it
-            echo "MONGODB_URI=${PROD_MONGODB_URI}" > .env
+            echo "MONGODB_URI=$PROD_MONGODB_URI" > .env
             echo "PORT=3000" >> .env
             docker-compose down
             docker-compose up -d --build
+        env:
+          PROD_MONGODB_URI: ${{ secrets.PROD_MONGODB_URI }}
